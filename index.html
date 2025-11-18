@@ -67,11 +67,22 @@ document.getElementById("letter").addEventListener("click", () => {
 // Сцена 2: движение рыцаря клавишами
 let knightPos = 20;
 const knight2 = document.getElementById("knight2");
+let questionAsked = false;
 
 document.addEventListener("keydown", (e) => {
     if (!document.getElementById("scene2").classList.contains("active")) return;
 
-         // ✅ мини-задание с загадкой
+    // движение рыцаря
+    const step = 20;
+    if (e.key === "ArrowRight") knightPos += step;
+    if (e.key === "ArrowLeft") knightPos -= step;
+
+    if (knightPos < 0) knightPos = 0;
+    if (knightPos > window.innerWidth - 200) knightPos = window.innerWidth - 200;
+
+    knight2.style.left = knightPos + "px";
+
+    // ✅ мини-задание с загадкой
     if(knightPos > 300 && !questionAsked) {
         const answer = prompt("Загадка: Что рыцарь должен доставить принцессе?");
         if(answer.toLowerCase() === "письмо") {
@@ -82,19 +93,7 @@ document.addEventListener("keydown", (e) => {
         questionAsked = true;
     }
 
-    const step = 20; // шаг движения в пикселях
-
-    if (e.key === "ArrowRight") {
-        knightPos += step;
-        if (knightPos > window.innerWidth - 200) knightPos = window.innerWidth - 200;
-    } else if (e.key === "ArrowLeft") {
-        knightPos -= step;
-        if (knightPos < 0) knightPos = 0;
-    }
-
-    knight2.style.left = knightPos + "px";
-
-    // Когда дошёл до конца сцены — перейти к замку
+    // переход к сцене 3
     if (knightPos >= window.innerWidth - 200) {
         goToScene(3);
         setTimeout(() => {
@@ -102,6 +101,7 @@ document.addEventListener("keydown", (e) => {
         }, 500);
     }
 });
+
 </script>
 
 </body>
