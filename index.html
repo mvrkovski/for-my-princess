@@ -45,49 +45,52 @@
 <audio id="music" src="music/Golden_Brown__Slowed_Down_Version_128k.mp3" loop></audio>
 
 <script>
-    const scenes = document.querySelectorAll(".scene");
-    function goToScene(n){
-        scenes.forEach(s => s.classList.remove("active"));
-        document.getElementById("scene"+n).classList.add("active");
+    // Сцены
+const scenes = document.querySelectorAll(".scene");
+function goToScene(n) {
+    scenes.forEach(s => s.classList.remove("active"));
+    document.getElementById("scene" + n).classList.add("active");
+}
+
+// Музыка
+document.addEventListener("keydown", () => {
+    const m = document.getElementById("music");
+    if (m.paused) m.play();
+});
+
+// Сцена 1: подбор письма
+document.getElementById("letter").addEventListener("click", () => {
+    alert("Рыцарь получил письмо! В путь к замку!");
+    goToScene(2);
+});
+
+// Сцена 2: движение рыцаря клавишами
+let knightPos = 20;
+const knight2 = document.getElementById("knight2");
+
+document.addEventListener("keydown", (e) => {
+    if (!document.getElementById("scene2").classList.contains("active")) return;
+
+    const step = 20; // шаг движения в пикселях
+
+    if (e.key === "ArrowRight") {
+        knightPos += step;
+        if (knightPos > window.innerWidth - 200) knightPos = window.innerWidth - 200;
+    } else if (e.key === "ArrowLeft") {
+        knightPos -= step;
+        if (knightPos < 0) knightPos = 0;
     }
 
-    // Запуск музыки при клике
-    document.addEventListener("click", () => {
-        let m = document.getElementById("music");
-        if(m.paused) m.play();
-    });
+    knight2.style.left = knightPos + "px";
 
-    // Сцена 1: подобрать письмо
-    document.getElementById("letter").addEventListener("click", () => {
-        alert("Рыцарь получил письмо! В путь к замку!");
-        goToScene(2);
-    });
-
-    // Сцена 2: движение рыцаря по дороге
-    let knightPos = 20;
-    const knight2 = document.getElementById("knight2");
-    document.getElementById("scene2").addEventListener("click", () => {
-        knightPos += 20;
-        knight2.style.left = knightPos + "px";
-        if(knightPos > window.innerWidth - 200){
-            goToScene(3);
-            setTimeout(() => {
-                document.getElementById("popup").style.display = "block";
-            }, 500);
-        }
-    });
-
-    // Для телефона: любое нажатие на сцену 2
-    knight2.addEventListener("click", () => {
-        knightPos += 20;
-        knight2.style.left = knightPos + "px";
-        if(knightPos > window.innerWidth - 200){
-            goToScene(3);
-            setTimeout(() => {
-                document.getElementById("popup").style.display = "block";
-            }, 500);
-        }
-    });
+    // Когда дошёл до конца сцены — перейти к замку
+    if (knightPos >= window.innerWidth - 200) {
+        goToScene(3);
+        setTimeout(() => {
+            document.getElementById("popup").style.display = "block";
+        }, 500);
+    }
+});
 </script>
 
 </body>
