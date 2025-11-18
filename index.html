@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Knight Quest</title>
+<style>
+    body { margin:0; overflow:hidden; font-family:"Georgia", serif; background:#d8c7a1; }
+    .scene { display:none; width:100vw; height:100vh; position:relative; }
+    .scene.active { display:block; }
+    #scene1, #scene2, #scene3 { background-size: cover; background-position: center; }
+    
+    img.character { position:absolute; bottom:20px; width:120px; height:auto; cursor:pointer; }
+    #popup { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+        background:#fff; border:4px solid #000; padding:20px; text-align:center; z-index:999; }
+    #popup img { width:200px; }
+    .btn { margin-top:10px; padding:8px 14px; border:2px solid black; background:#e0d5bd; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<!-- Сцена 1: Деревня -->
+<div id="scene1" class="scene active" style="background-image: url('images/village.png');">
+    <img id="knight1" class="character" src="images/knight.png">
+    <img id="letter" class="character" src="images/letter.png" style="left:300px;">
+</div>
+
+<!-- Сцена 2: Дорога -->
+<div id="scene2" class="scene" style="background-image: url('images/road.png');">
+    <img id="knight2" class="character" src="images/knight.png" style="left:20px;">
+</div>
+
+<!-- Сцена 3: Замок -->
+<div id="scene3" class="scene" style="background-image: url('images/castle.png');">
+    <img id="knight3" class="character" src="images/knight.png" style="left:20px;">
+    <img id="princess" class="character" src="images/princess.png" style="right:50px; bottom:20px;">
+    <div id="popup">
+        <h2>✨ Рыцарь доставил письмо принцессе! ✨</h2>
+        <p>Вот твоя награда:</p>
+        <img src="images/qr.png" alt="QR">
+        <div class="btn" onclick="location.reload()">Играть снова</div>
+    </div>
+</div>
+
+<!-- Музыка -->
+<audio id="music" src="music/theme.mp3" loop></audio>
+
+<script>
+    const scenes = document.querySelectorAll(".scene");
+    function goToScene(n){
+        scenes.forEach(s => s.classList.remove("active"));
+        document.getElementById("scene"+n).classList.add("active");
+    }
+
+    // Запуск музыки при клике
+    document.addEventListener("click", () => {
+        let m = document.getElementById("music");
+        if(m.paused) m.play();
+    });
+
+    // Сцена 1: подобрать письмо
+    document.getElementById("letter").addEventListener("click", () => {
+        alert("Рыцарь получил письмо! В путь к замку!");
+        goToScene(2);
+    });
+
+    // Сцена 2: движение рыцаря по дороге
+    let knightPos = 20;
+    const knight2 = document.getElementById("knight2");
+    document.getElementById("scene2").addEventListener("click", () => {
+        knightPos += 20;
+        knight2.style.left = knightPos + "px";
+        if(knightPos > window.innerWidth - 200){
+            goToScene(3);
+            setTimeout(() => {
+                document.getElementById("popup").style.display = "block";
+            }, 500);
+        }
+    });
+
+    // Для телефона: любое нажатие на сцену 2
+    knight2.addEventListener("click", () => {
+        knightPos += 20;
+        knight2.style.left = knightPos + "px";
+        if(knightPos > window.innerWidth - 200){
+            goToScene(3);
+            setTimeout(() => {
+                document.getElementById("popup").style.display = "block";
+            }, 500);
+        }
+    });
+</script>
+
+</body>
+</html>
