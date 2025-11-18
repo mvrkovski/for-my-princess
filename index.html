@@ -60,7 +60,7 @@ document.addEventListener("keydown", () => {
 
 // Сцена 1: подбор письма
 document.getElementById("letter").addEventListener("click", () => {
-    alert("Рыцарь получил письмо! В путь к замку!");
+    alert("Рыцарь забрал письмо! В путь к замку!");
     goToScene(2);
 });
 
@@ -82,6 +82,17 @@ document.addEventListener("keydown", (e) => {
     }
 
     knight2.style.left = knightPos + "px";
+    
+     // ✅ мини-задание с загадкой
+    if(knightPos > 300 && !questionAsked) {
+        const answer = prompt("Загадка: Что рыцарь должен доставить принцессе?");
+        if(answer.toLowerCase() === "письмо") {
+            alert("Правильно! Двигаемся дальше.");
+        } else {
+            alert("Неправильно! Попробуй ещё раз.");
+        }
+        questionAsked = true;
+    }
 
     // Когда дошёл до конца сцены — перейти к замку
     if (knightPos >= window.innerWidth - 200) {
