@@ -4,6 +4,22 @@
 <meta charset="UTF-8">
 <title>Knight Quest</title>
 <style>
+
+#instruction-banner {
+    position: absolute;       /* фиксируем относительно сцены */
+    top: 20px;                /* отступ сверху */
+    left: 50%;                /* центрируем по горизонтали */
+    transform: translateX(-50%); /* точное центрирование */
+    padding: 8px 15px;        /* отступы внутри баннера */
+    background-color: rgba(0,0,0,0.7); /* полупрозрачный фон */
+    color: #fff;              /* белый текст */
+    font-size: 16px;          /* размер шрифта */
+    border-radius: 5px;       /* скругление углов */
+    z-index: 10;              /* поверх персонажей */
+    text-align: center;       /* центр текста */
+}
+
+ 
     body { margin:0; overflow:hidden; font-family:"Georgia", serif; background:#d8c7a1; }
     .scene { display:none; width:100vw; height:100vh; position:relative; }
     .scene.active { display:block; }
