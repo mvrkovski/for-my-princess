@@ -95,11 +95,11 @@ document.addEventListener("keydown", (e) => {
 
     // Загадка
     if (!questionAsked && knightPos >= 300) {
-        const answer = prompt("Загадка: Что попалось в киндере принцессе?");
-        if (answer.toLowerCase() === "кролик") {
-            alert("Правильно! Двигаемся дальше.");
+        const answer = prompt("Загадка: Что подарила принцесса рыцарю в Милане?");
+        if (answer.toLowerCase() === "паспорт Лего") {
+            alert("Правильно! Двигаемся дальше!");
         } else {
-            alert("Неправильно! Попробуй ещё раз.");
+            alert("Правильно! Двигаемся дальше!");
         }
         questionAsked = true;
     }
