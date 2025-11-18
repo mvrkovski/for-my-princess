@@ -65,27 +65,38 @@ document.getElementById("letter").addEventListener("click", () => {
 });
 
 // Сцена 2: движение рыцаря клавишами
-let knightPos = 20;
+let knightPos = 20; // позиция рыцаря
+let questionAsked = false; // флаг загадки
+
 const knight2 = document.getElementById("knight2");
-let questionAsked = false;
 
+function startScene2() {
+    knightPos = 20;
+    questionAsked = false;
+    knight2.style.left = knightPos + "px";
+    goToScene(2);
+}
+
+// Движение стрелками
 document.addEventListener("keydown", (e) => {
-    if (!document.getElementById("scene2").classList.contains("active")) return;
+    const scene2 = document.getElementById("scene2");
+    if (!scene2.classList.contains("active")) return;
 
-    // движение рыцаря
     const step = 20;
+
     if (e.key === "ArrowRight") knightPos += step;
     if (e.key === "ArrowLeft") knightPos -= step;
 
+    // Ограничение по краям экрана
     if (knightPos < 0) knightPos = 0;
     if (knightPos > window.innerWidth - 200) knightPos = window.innerWidth - 200;
 
     knight2.style.left = knightPos + "px";
 
-    // ✅ мини-задание с загадкой
-    if(knightPos > 300 && !questionAsked) {
+    // Загадка
+    if (!questionAsked && knightPos >= 300) {
         const answer = prompt("Загадка: Что рыцарь должен доставить принцессе?");
-        if(answer.toLowerCase() === "письмо") {
+        if (answer.toLowerCase() === "письмо") {
             alert("Правильно! Двигаемся дальше.");
         } else {
             alert("Неправильно! Попробуй ещё раз.");
@@ -93,7 +104,7 @@ document.addEventListener("keydown", (e) => {
         questionAsked = true;
     }
 
-    // переход к сцене 3
+    // Переход к сцене 3
     if (knightPos >= window.innerWidth - 200) {
         goToScene(3);
         setTimeout(() => {
